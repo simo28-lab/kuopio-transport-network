@@ -48,28 +48,27 @@ somma = line.groupby(['route_I', 'trip_I'])['distance'].sum().reset_index()
 sommatop=somma['distance'].max() 
 righe_max = somma[somma['distance']==sommatop]
 
-riga=righe_max.iloc[0].tolist() #trasforma in una lista una delle 4 righe massime
-
+riga=righe_max.iloc[0].tolist() 
 print(type(riga[0]))
-riga[0]=int(riga[0]) #trasformo in interi la linea e la corsa, la distanza la lascio in float
+riga[0]=int(riga[0]) 
 riga[1]=int(riga[1])
-print(riga) #linea che copre distanza maggiore
+print(riga) #line that covers the greatest distance
 
 
-# calcolo del numero di fermate della linea che percorre distanza maggiore
+# calculate the number of stops of the line that covers the greatest distance
 print('Line ', riga[0])
 line=line.sort_values(by='seq') 
 for index, row in line.iterrows(): 
-    if row['route_I']==riga[0] and row['trip_I']==riga[1]: #se sono nella linea e corsa massima
+    if row['route_I']==riga[0] and row['trip_I']==riga[1]: 
         print(row['seq'],row['name_x']) #
 
-        a=row['seq'] #Salva l’ultimo numero di sequenza in a.
-        b=row['name_y'] #Salva il nome della fermata di arrivo (name_y) in b.
-print(a+1,b) #stampa l'ultima fermata che non viene stampata nel for
+        a=row['seq']
+        b=row['name_y'] 
+print(a+1,b) 
 
 
 
-line_week=week #rifaccio stessa cosa per week
+line_week=week #same for week
 
 
 line_week= pd.merge(line_week, nodo, left_on=("from_stop_I"), right_on=("stop_I")).drop("stop_I", axis=1)
@@ -90,16 +89,16 @@ riga[0]=int(riga[0])
 riga[1]=int(riga[1])
 print(riga)
 
-# calcolo del numero di fermate del bus che percorre distanza maggiore
+# calculate the number of stops of the line that covers the greatest distance
 print('Line ', riga[0])
 line_week = line_week.sort_values(by='seq')
 
-prev_name = 'parola_random'  # inizializza variabile per salvare l'ultimo nome stampato
+prev_name = 'parola_random'  
 
 for index, row in line_week.iterrows():
     if row['route_I']==riga[0] and row['trip_I']==riga[1]:
         if row['name_x'] == prev_name:
-            continue  # salta l'iterazione se il nome è uguale al precedente 
+            continue  
         print(row['seq'],row['name_x'])
         prev_name = row['name_x']  
         a=row['seq']
@@ -112,7 +111,7 @@ print(a+1,b)
 ################################# Question 2 #################################
 ##############################################################################
 
-G_day = nx.DiGraph() #grafo diretto 
+G_day = nx.DiGraph() #direct graph
 diz_day={}
 for _, row in nodo.iterrows():
     nodo_id = row['stop_I']
@@ -142,7 +141,7 @@ for _, row in week.iterrows():
 
 diz_arrivi_day = {} 
 for u, v in G_day.edges():
-    # 'v' è il nodo di arrivo. Controlliamo quante volte appare come destinazione.
+    
     diz_arrivi_day[v] = diz_arrivi_day.get(v, 0) + 1 
 
 diz_arrivi_week = {} 
@@ -152,10 +151,10 @@ for u, v in G_week.edges():
 
 
 #Calcola e stampa la Top 10
-print("--- Conteggio delle occorrenze di ogni fermata come nodo di arrivo in day e week ---")
-print("Top 10 fermate per numero di arrivi:")
+print("--- "Number of times each stop appears as a destination node (daily and weekly) ---")
+print("Top 10 stops by number of arrivals:")
 
-top_10_day=sorted(diz_arrivi_day.items(), key=lambda x: x[1], reverse=True )[:10] #lista di tuple dove stampo solo secondo elem tupla e rispetto a questo ordino in modo decrescente i primi 10
+top_10_day=sorted(diz_arrivi_day.items(), key=lambda x: x[1], reverse=True )[:10] 
 top_10_week=sorted(diz_arrivi_week.items(), key=lambda x: x[1], reverse=True )[:10]
 
 
@@ -175,7 +174,7 @@ for stop_id, count in top_10_week:
 ##############################################################################
 
 #day
-UG_day = nx.Graph(G_day) #Trasforma un grafo G in un grafo indiretto UG_day
+UG_day = nx.Graph(G_day) # UG_day undirected graph
 diz_componenti_day = {}
 cc_day=set()
 
@@ -206,7 +205,7 @@ for i in remov_day:
 
 
 #week
-UG_week = nx.Graph(G_week) #Trasforma un grafo G in un grafo indiretto UG_week
+UG_week = nx.Graph(G_week) 
 
 diz_componenti_week = {}
 cc_week=set()
@@ -255,8 +254,8 @@ def approx_average_distance(G, k=100):
 
 
 
-print("Stima distanza media in day:", approx_average_distance(UG_day_connesso))
-print("Stima distanza media in week:", approx_average_distance(UG_week_connesso))
+print("Estimated average distance daily:", approx_average_distance(UG_day_connesso))
+print("Estimated average distance weekly:", approx_average_distance(UG_week_connesso))
 
 
 
@@ -264,7 +263,7 @@ print("Stima distanza media in week:", approx_average_distance(UG_week_connesso)
 ################################# Question 4 #################################
 ##############################################################################
 
-#plot per day
+#plot-day
 
 day['dep_date_time'] = pd.to_datetime(day['dep_time_ut'], unit='s')
 day['hour'] = day['dep_date_time'].dt.hour
@@ -288,7 +287,7 @@ plt.show()
 
 
 
-#plot per week
+#plot-week
 
 week['dep_date_time'] = pd.to_datetime(week['dep_time_ut'], unit='s') 
 week['hour'] = week['dep_date_time'].dt.hour
@@ -301,7 +300,7 @@ plt.figure(figsize=(12, 6))
 
 plt.bar(departures_per_hour.index, departures_per_hour.values, color='green')
 
-plt.title('Numero di archi nel tempon week')
+plt.title('Number of edges over time-week')
 plt.xlabel('hours')
 plt.ylabel('Number of departures')
 plt.xticks(range(0, 24)) 
@@ -311,7 +310,7 @@ plt.show()
 
 
 
-#calcolo numero locations e connessioni dirette uniche per day
+#Calculation of the number of unique locations and direct connections (daily)
 
 start_time_day = time.time()
 
@@ -329,13 +328,14 @@ execution_time_day = end_time_day - start_time_day
    
   
   
-print('il numero di locations uniche per day è:', num_unique_locations)
-print('il numero di connessioni dirette uniche per day è:', num_unique_direct_connections)
-print('il tempo di esecuzione per day è:', f'{execution_time_day:.16f}')
+print('the number of unique locations daily is:', num_unique_locations)
+print('the number of unique direct connections daily is:', num_unique_direct_connections)
+print('the execution daily time is:', f'{execution_time_day:.16f}')
 
    
 
-#calcolo numero locations e connessioni dirette uniche per week
+#Calculation of the number of unique locations and direct connections (weekly)
+
 
 start_time_week = time.time()
 
@@ -353,8 +353,9 @@ execution_time_week = end_time_week - start_time_week
    
   
   
-print('il numero di locations uniche per week è:', num_unique_locations)
-print('il numero di connessioni dirette uniche per week è:', num_unique_direct_connections)
-print('il tempo di esecuzione per week è:', f'{execution_time_week:.16f}')
+print('the number of unique locations weekly is:', num_unique_locations)
+print('the number of unique direct connections weekly is:', num_unique_direct_connections)
+print('the execution weekly time is:', f'{execution_time_week:.16f}')
 
    
+
