@@ -19,7 +19,7 @@ This project analyzes daily and weekly bus transportation networks using Python 
 
 ## Usage
 
-1. Place your CSV files (`C:\Users\simon\Downloads\lezioni analisi 3\progetto\kuopio\network_nodes.csv`, `C:\Users\simon\Downloads\progetto python\progetto\kuopio\network_temporal_day.csv`, `C:\Users\simon\Downloads\progetto python\progetto\kuopio\network_temporal_week.csv`) in the project folder.
+1. Place your CSV files (`network_nodes.csv`, `network_temporal_day.csv`, `network_temporal_week.csv`) in the project folder.
 
   
 2. Install dependencies:
