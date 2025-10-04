@@ -13,8 +13,8 @@ This project analyzes daily and weekly bus transportation networks using Python 
 
  ## Visualizations
 
-![Daily Departures](C:\Users\simon\OneDrive\Documenti\kuopio-network\kuopio\kuopio\daily_departures_kuopio.png)
-![Weekly Departures](C:\Users\simon\OneDrive\Documenti\kuopio-network\kuopio\kuopio\weekly_departures_kuopio.png) 
+![Daily Departures](daily_departures_kuopio.png)
+![Weekly Departures](weekly_departures_kuopio.png) 
 
 
 ## Usage
