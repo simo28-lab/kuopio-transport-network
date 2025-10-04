@@ -13,13 +13,15 @@ This project analyzes daily and weekly bus transportation networks using Python 
 
  ## Visualizations
 
-![Daily Departures](daily_departures_kuopio.png)  
-![Weekly Departures](weekly_departures_kuopio.png) 
+![Daily Departures](C:\Users\simon\OneDrive\Documenti\kuopio-network\kuopio\kuopio\daily_departures_kuopio.png)
+![Weekly Departures](C:\Users\simon\OneDrive\Documenti\kuopio-network\kuopio\kuopio\weekly_departures_kuopio.png) 
 
 
 ## Usage
 
-1. Place your CSV files (`network_nodes.csv`, `network_temporal_day.csv`, `network_temporal_week.csv`) in the project folder.  
+1. Place your CSV files (`C:\Users\simon\Downloads\progetto python\progetto\rome\network_nodes.csv`, `C:\Users\simon\Downloads\progetto python\progetto\kuopio\network_temporal_day.csv`, `C:\Users\simon\Downloads\progetto python\progetto\kuopio\network_temporal_week.csv`) in the project folder.
+
+  
 2. Install dependencies:
 
 ```bash
