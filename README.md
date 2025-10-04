@@ -29,7 +29,7 @@ pip install pandas numpy networkx matplotlib
 
 ## Run the python script
 
-python bus_network_analysis.py
+python Project_Python.py
 
 Outputs you will get:
 
