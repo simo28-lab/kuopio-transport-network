@@ -7,7 +7,6 @@ Created on Wed Jul  9 11:54:50 2025
 
 
 
-
 import numpy as np
 import pandas as pd
 import networkx as nx
@@ -150,7 +149,7 @@ for u, v in G_week.edges():
     diz_arrivi_week[v] = diz_arrivi_week.get(v, 0) + 1
 
 
-#Calcola e stampa la Top 10
+#print the top 10
 print("--- "Number of times each stop appears as a destination node (daily and weekly) ---")
 print("Top 10 stops by number of arrivals:")
 
@@ -259,6 +258,50 @@ print("Estimated average distance weekly:", approx_average_distance(UG_week_conn
 
 
 
+
+def approx_closeness(G, k):
+    """
+    Approximate closeness centrality for each node in undirected, unweighted graph G
+    using k random BFS samples and the given formula.
+    """
+    nodes = list(G.nodes())
+    n = len(nodes)
+    sample_nodes = random.sample(nodes, min(k, n))
+
+    scores = {u: 0 for u in nodes}
+
+    for u in nodes:
+        total = 0
+        for v in sample_nodes:
+            if u == v:
+                continue
+            distances = nx.single_source_shortest_path_length(G, v)
+            if u in distances:
+                total += (n * distances[u]) / (n - 1)
+        if total > 0:
+            scores[u] = 1 / (total / k)  # formula corretta
+        else:
+            scores[u] = 0
+
+    return scores
+
+# Compute scores
+closeness_scores_day = approx_closeness(UG_day_connesso, k=50)
+closeness_scores_week = approx_closeness(UG_week_connesso, k=50)
+
+# Get Top-10 nodes
+top10_day = sorted(closeness_scores_day.items(), key=lambda x: x[1], reverse=True)[:10]
+top10_week = sorted(closeness_scores_week.items(), key=lambda x: x[1], reverse=True)[:10]
+
+print("\nTop 10 nodes by approximate closeness centrality (day):")
+for node, score in top10_day:
+    print(f"Stop {node} ({diz_day[node]}): {score:.4f}")
+
+
+print("\nTop 10 nodes by approximate closeness centrality (week):")
+for node, score in top10_week:
+    print(f"Stop {node} ({diz_day[node]}): {score:.4f}")
+
 ##############################################################################
 ################################# Question 4 #################################
 ##############################################################################
@@ -358,4 +401,5 @@ print('the number of unique direct connections weekly is:', num_unique_direct_co
 print('the execution weekly time is:', f'{execution_time_week:.16f}')
 
    
+
 
