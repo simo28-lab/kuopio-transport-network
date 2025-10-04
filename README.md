@@ -19,33 +19,50 @@ This project analyzes daily and weekly bus transportation networks using Python 
 
 ## Usage
 
-1. Place your CSV files (`network_nodes.csv`, `network_temporal_day.csv`, `network_temporal_week.csv`) in the project folder.
+## Usage
 
-  
-2. Install dependencies:
+1. **Place your CSV files** in the main project folder (same level as the Python script):
+
+- `network_nodes.csv`  
+- `network_temporal_day.csv`  
+- `network_temporal_week.csv`  
+
+> Make sure the filenames match exactly, or update the script accordingly.
+
+2. **Install required Python packages**:
 
 ```bash
 pip install pandas numpy networkx matplotlib
+Optional: Verify files and working directory
 
-## Run the python script
+Before running the script, you can check that Python sees the files correctly:
 
+python
+Copia codice
+import os
+
+print("Current working directory:", os.getcwd())
+print("Files in this directory:", os.listdir())
+This ensures the CSV files are in the correct folder.
+
+Run the Python script:
+
+bash
+Copia codice
 python Project_Python.py
+Expected outputs:
 
-Outputs you will get:
+Longest bus route and its stops
 
-- Top-10 most central stops for daily and weekly networks
+Top-10 most frequent stops for daily and weekly networks
 
-- Average path length of the largest connected component
+Largest connected component and average shortest-path distance
 
-- Longest bus route and its stops
+Approximate closeness centrality for each stop (top-10 most central stops)
 
-- Bar plots showing departures per hour for day and week networks
+Bar plots showing departures per hour for day and week networks
 
-## Takeaways
+Plot images saved in the images/ folder (daily_departures_kuopio.png and weekly_departures_kuopio.png)
 
--Understand network structure and efficiency
--Identify key hubs and high-traffic stops
--Visualize daily and weekly activity patterns
-
-
-This project demonstrates practical graph analysis and network science applied to real-world transport data.
+yaml
+Copia codice
