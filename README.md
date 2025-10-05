@@ -92,7 +92,7 @@ This analysis focuses on the temporal dimension of the network.
  ## Visualizations
 
 ![Daily Departures](daily_departures_kuopio.png)
-![Weekly Departures](week) 
+![Weekly Departures](weekly_departures_kuopio) 
 
 
 ## Usage
