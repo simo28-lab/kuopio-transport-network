@@ -150,9 +150,13 @@ for u, v in G_week.edges():
 
 
 #print the top 10
-print("Top 10 stops by number of arrivals:")
+print("Top 10 stops by number of arrivals (daily):")
 
 top_10_day=sorted(diz_arrivi_day.items(), key=lambda x: x[1], reverse=True )[:10] 
+
+
+print("Top 10 stops by number of arrivals (weekly):")
+
 top_10_week=sorted(diz_arrivi_week.items(), key=lambda x: x[1], reverse=True )[:10]
 
 
@@ -400,6 +404,7 @@ print('the number of unique direct connections weekly is:', num_unique_direct_co
 print('the execution weekly time is:', f'{execution_time_week:.16f}')
 
    
+
 
 
 
