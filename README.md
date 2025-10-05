@@ -35,309 +35,112 @@ import os
 print("Current working directory:", os.getcwd())
 print("Files in this directory:", os.listdir())
 python Project_Python.py
-Key Highlights / Questions
-Question 1: Longest Route
 
-Objective: Find the bus line covering the greatest distance in daily and weekly schedules.
+Theoretical Appendix: Key Concepts in Network Analysis
+This section provides an overview of the theoretical concepts underlying the transportation network analysis.
 
-Methodology / Theory:
+1. Longest Route
+Concept: Geographical Distance and Path Aggregation
+Identifying the longest route requires calculating the approximate distance of each bus segment and aggregating it for an entire trip.
 
-Merged the trip data with the stop coordinates (latitude and longitude).
+Euclidean Distance: The distance between consecutive stops (using latitude and longitude) is approximated using the Euclidean distance formula in a 2D space. While an approximation of the actual road distance, it provides a consistent metric for comparison:
 
-Computed the Euclidean distance between consecutive stops for each trip:
-
-𝑑
-𝑖
-𝑠
-𝑡
-𝑎
-𝑛
-𝑐
-𝑒
-=
-(
-𝑙
-𝑎
-𝑡
-𝑓
-𝑟
-𝑜
-𝑚
-−
-𝑙
-𝑎
-𝑡
-𝑡
-𝑜
-)
+d= 
+(lat 
+1
+​
+ −lat 
 2
-+
-(
-𝑙
-𝑜
-𝑛
-𝑓
-𝑟
-𝑜
-𝑚
-−
-𝑙
-𝑜
-𝑛
-𝑡
-𝑜
-)
+​
+ ) 
 2
-distance=
-(lat
-from
-	​
-
-−lat
-to
-	​
-
-)
+ +(lon 
+1
+​
+ −lon 
 2
-+(lon
-from
-	​
-
-−lon
-to
-	​
-
-)
+​
+ ) 
 2
-	​
+ 
 
+​
+ 
+Route Length: The total length of a specific route (identified by route_I and trip_I) is the sum of these Euclidean distances for all segments the bus travels.
 
-Summed distances for each trip to get total route length.
+2. Top-10 Most Frequent Stops
+Concept: Node Degree (In-degree)
+This analysis models the transit system as a Directed Graph (G), where nodes are stops and edges are direct bus connections.
 
-Selected the trip with the maximum total distance.
+In-degree: To find the busiest arrival stops, we calculate the In-degree of each node (v). The in-degree(v) is the number of edges pointing into the stop v.
 
-Results:
+in-degree(v)=Number of arrivals at stop v
+Interpretation: Stops with the highest in-degree are the major attractors or arrival hubs in the network, indicating high incoming traffic volume.
 
-Daily network:
+3. Core Network Structure (Largest Connected Component)
+Concept: Connectedness and Efficiency
+Before calculating path-based metrics, the network is viewed as an Undirected Graph (UG).
 
-Longest line: Route X, Trip Y
+Connected Component: A connected component is a subgraph where a path exists between any two nodes within it.
 
-Number of stops: N
+Largest Connected Component (LCC): The LCC is the component containing the maximum number of nodes. It represents the main, interconnected backbone of the transit system. All calculated distance metrics are performed only on the LCC, as paths cannot be calculated to stops outside this core network.
 
-Last stop: Stop Name
+3.1 Average Shortest-Path Distance
+Concept: Global Network Efficiency
+The average shortest-path distance is a measure of the overall efficiency and compactness of the LCC.
 
-Weekly network:
+Shortest Path (d(u,v)): The minimum number of transfers (segments) required to travel between any two stops u and v in the LCC, calculated using Breadth-First Search (BFS).
 
-Longest line: Route X, Trip Y
+Average Distance ( 
+d
+ˉ
+ ): The average of all shortest paths between all distinct pairs of nodes. A low  
+d
+ˉ
+  suggests an efficient network where most stops are quickly reachable from others.
 
-Number of stops: N
+Approximation: For large networks, calculating all shortest paths is computationally intensive. The analysis uses random sampling (k), calculating shortest paths from a small subset of randomly chosen nodes to all others, providing a statistically sound estimate much faster.
 
-Last stop: Stop Name
+3.2 Closeness Centrality
+Concept: Accessibility and Speed of Access
+Closeness centrality identifies which stops are best positioned to quickly reach the entire network and be reached by it.
 
-This identifies which bus lines cover the largest geographical span, useful for planning and analysis.
+Definition: The Closeness Centrality C 
+c
+​
+ (v) of a stop v is the inverse of the sum of its shortest-path distances to all other nodes (u
+
+=v) in the LCC.
 
-Question 2: Top-10 Most Frequent Stops
+C 
+c
+​
+ (v)= 
+∑ 
+u
+
+=v
+​
+ d(v,u)
+N−1
+​
+ 
 
-Objective: Identify the busiest stops based on the number of arrivals.
+where N is the number of nodes in the LCC.
 
-Methodology / Theory:
+Interpretation: Stops with high C 
+c
+​
+ (v) are the most central in terms of travel time (number of steps), acting as ideal transit points to minimize transfers for reaching any part of the core network.
 
-Built a directed graph for the daily network and an undirected graph for the weekly network using NetworkX.
+Approximation: Similar to average distance, approximate closeness uses a random sample of nodes (k) to estimate the total distance sum, allowing for fast calculation of this metric across all nodes.
 
-Each node represents a bus stop; edges represent trips between stops.
+4. Traffic Patterns (Departures per Hour)
+Concept: Temporal Dynamics and Peak Load
+This analysis focuses on the temporal dimension of the network.
 
-Counted the number of incoming edges for each stop (arrivals).
+Time Series Analysis: The total number of bus departures (edges) is aggregated by the hour of the day.
 
-Sorted stops by arrival count to get the top-10 busiest stops.
+Distribution: The resulting bar chart shows the distribution of the system's workload over 24 hours.
 
-Results:
-
-Top 10 stops (daily):
-
-ID: 123 --> Stop Name: # Arrivals 45
-ID: 124 --> Stop Name: # Arrivals 42
-...
-
-
-Top 10 stops (weekly):
-
-ID: 123 --> Stop Name: # Arrivals 300
-ID: 124 --> Stop Name: # Arrivals 290
-...
-
-
-Frequent stops indicate high traffic and are central for operational efficiency.
-
-Question 3: Largest Connected Component & Centrality
-
-Objective: Analyze network connectivity and identify central stops.
-
-Methodology / Theory:
-
-Largest Connected Component:
-
-Converted graphs to undirected versions.
-
-Applied Depth-First Search (DFS) to identify connected components.
-
-Selected the largest connected component to focus on the main network structure.
-
-Average Distance (approximation):
-
-To measure typical path lengths, we used random sampling:
-
-Selected k random nodes
-
-Computed shortest-path distances from each sampled node to all others
-
-Averaged the distances:
-
-avg distance
-≈
-∑
-𝑖
-,
-𝑗
-𝑑
-(
-𝑖
-,
-𝑗
-)
-number of pairs
-avg distance≈
-number of pairs
-∑
-i,j
-	​
-
-d(i,j)
-	​
-
-
-This avoids expensive computation for very large networks.
-
-Closeness Centrality (approximation):
-
-Measures how close a stop is to all others in the network.
-
-For each node u, used random BFS samples and the formula:
-
-𝐶
-(
-𝑢
-)
-≈
-𝑘
-∑
-𝑣
-∈
-𝑆
-𝑑
-(
-𝑢
-,
-𝑣
-)
-C(u)≈
-∑
-v∈S
-	​
-
-d(u,v)
-k
-	​
-
-
-where S is a set of k randomly sampled nodes.
-
-Sorted nodes by centrality to identify top-10 most central stops.
-
-Results:
-
-Estimated average distance:
-
-Daily: X.X
-
-Weekly: Y.Y
-
-Top 10 nodes by closeness centrality (daily/weekly):
-
-Stop 123 (Stop Name): 0.1234
-Stop 124 (Stop Name): 0.1201
-...
-
-
-Central nodes are critical for connectivity, efficiency, and passenger accessibility.
-
-Question 4: Traffic Patterns & Unique Connections
-
-Objective: Visualize network activity over time and quantify its structure.
-
-Methodology / Theory:
-
-Converted departure timestamps to hours of the day.
-
-Counted number of edges (departures) per hour to visualize traffic patterns using bar charts.
-
-Calculated unique stops and direct connections by removing duplicates from the daily and weekly data.
-
-Results:
-
-Daily departures: Bar chart shows peak hours.
-
-Weekly departures: Bar chart shows trends across days.
-
-Unique locations and connections:
-
-Daily: X unique stops, Y unique direct connections
-
-Weekly: X unique stops, Y unique direct connections
-
-Plotting the frequency of edges helps identify peak traffic times and understand network load.
-
-Visualizations
-
-Daily Departures
-
-
-Weekly Departures
-
-
-Include actual plots generated by your script.
-
-Usage
-
-Place CSV files in the main project folder (same level as the Python script):
-
-network_nodes.csv
-network_temporal_day.csv
-network_temporal_week.csv
-
-
-Install required Python packages:
-
-pip install pandas numpy networkx matplotlib
-
-
-Run the Python script:
-
-python Project_Python.py
-
-Conclusions
-
-The analysis identifies key routes, busiest stops, and central nodes, crucial for the efficiency of Kuopio’s bus network.
-
-Daily and weekly traffic patterns reveal peak hours and high-demand stops, guiding operational decisions.
-
-Approximate algorithms for distance and centrality allow fast estimation without computing all pairwise paths.
-
-Future improvements could include:
-
-Real-time traffic integration
-
-Route optimization
-
-Passenger flow analysis
-
-This project provides a reproducible framework for analyzing urban bus networks and supports decision-making for network planning and management.
+Peak Hours: High bars indicate peak hours (rush hours), which are critical for service planning and resource allocation. Comparing the daily and weekly distributions helps distinguish between typical weekday commuting patterns and weekend/off-peak usage.
