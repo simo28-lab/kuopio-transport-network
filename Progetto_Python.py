@@ -18,11 +18,18 @@ from collections import Counter
 import matplotlib.pyplot as plt
 
 
-project_ = os.getcwd()
-nodo = pd.read_csv("C:\\Users\\simon\\Downloads\\progetto python\\progetto\\kuopio\\network_nodes.csv", sep=';')
-day = pd.read_csv("C:\\Users\\simon\\Downloads\\progetto python\\progetto\\kuopio\\network_temporal_day.csv", sep=';')
-week = pd.read_csv("C:\\Users\\simon\\Downloads\\progetto python\\progetto\\kuopio\\network_temporal_week.csv",sep=';')
-
+project= os.getcwd()
+nodo = pd.read_csv(
+    os.path.join(project, "kuopio", "network_nodes.csv"), sep=";"
+)
+day = pd.read_csv(
+    os.path.join(project, "kuopio", "network_temporal_day.csv"),
+    sep=";",
+)
+week = pd.read_csv(
+    os.path.join(project, "kuopio", "network_temporal_week.csv"),
+    sep=";",
+)
 ##############################################################################
 ################################# Question 1 #################################
 ##############################################################################
