@@ -20,14 +20,14 @@ import matplotlib.pyplot as plt
 
 project= os.getcwd()
 nodo = pd.read_csv(
-    os.path.join(project, "kuopio", "network_nodes.csv"), sep=";"
+    os.path.join(project, "network_nodes.csv"), sep=";"
 )
 day = pd.read_csv(
-    os.path.join(project, "kuopio", "network_temporal_day.csv"),
+    os.path.join(project, "network_temporal_day.csv"),
     sep=";",
 )
 week = pd.read_csv(
-    os.path.join(project, "kuopio", "network_temporal_week.csv"),
+    os.path.join(project, "network_temporal_week.csv"),
     sep=";",
 )
 ##############################################################################
