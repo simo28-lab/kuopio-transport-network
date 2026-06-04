@@ -13,11 +13,12 @@ import networkx as nx
 import math as mt
 import random
 import time 
+import os
 from collections import Counter
 import matplotlib.pyplot as plt
 
 
-
+project_ = os.getcwd()
 nodo = pd.read_csv("C:\\Users\\simon\\Downloads\\progetto python\\progetto\\kuopio\\network_nodes.csv", sep=';')
 day = pd.read_csv("C:\\Users\\simon\\Downloads\\progetto python\\progetto\\kuopio\\network_temporal_day.csv", sep=';')
 week = pd.read_csv("C:\\Users\\simon\\Downloads\\progetto python\\progetto\\kuopio\\network_temporal_week.csv",sep=';')
