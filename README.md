@@ -112,7 +112,7 @@ Run the script:
 
 Bash
 
-python Project_Python.py
+python Progetto_Python.py
 
 
 
